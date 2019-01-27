@@ -28,6 +28,8 @@ public class RequestController {
 
     @RequestMapping("/accept")
     public ResponseEntity accept(Request request) {
+        if (request.getId() == null || requestRepository.existsById(request.getId()))
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);//400
         requestSender.sendRequest(request);
         return new ResponseEntity(HttpStatus.OK); //200
     }
